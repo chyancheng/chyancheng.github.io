@@ -3,9 +3,9 @@
   <title><![CDATA[chyancheng]]></title>
   
   <link href="/atom.xml" rel="self"/>
-  <link href="http://yoursite.com/"/>
+  <link href="http://chyancheng.github.io/"/>
   <updated>2015-03-20T01:59:48.938Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://chyancheng.github.io/</id>
   
   <author>
     <name><![CDATA[chyancheng]]></name>
@@ -16,8 +16,8 @@
   
   <entry>
     <title><![CDATA[Hello My Blog]]></title>
-    <link href="http://yoursite.com/2015/03/18/hello-world/"/>
-    <id>http://yoursite.com/2015/03/18/hello-world/</id>
+    <link href="http://chyancheng.github.io/2015/03/18/hello-world/"/>
+    <id>http://chyancheng.github.io/2015/03/18/hello-world/</id>
     <published>2015-03-17T16:00:00.000Z</published>
     <updated>2015-03-20T01:59:48.938Z</updated>
     <content type="html"><![CDATA[<p>利用hexo搭建的静态博客。参考教程<a href="http://cnfeat.com/2014/05/10/2014-05-11-how-to-build-a-blog/" target="_blank" rel="external">如何搭建一个独立博客——简明Github Pages与Hexo教程</a>。</p>
@@ -26,9 +26,9 @@
     <![CDATA[<p>利用hexo搭建的静态博客。参考教程<a href="http://cnfeat.com/2014/05/10/2014-05-11-how-to-build-a-blog/" target="_blank" rel="external">如何搭建一个独立博客——简明Git]]>
     </summary>
     
-      <category term="blog" scheme="http://yoursite.com/tags/blog/"/>
+      <category term="blog" scheme="http://chyancheng.github.io/tags/blog/"/>
     
-      <category term="life" scheme="http://yoursite.com/tags/life/"/>
+      <category term="life" scheme="http://chyancheng.github.io/tags/life/"/>
     
   </entry>
   
