@@ -3,9 +3,9 @@
   <title><![CDATA[chyancheng]]></title>
   
   <link href="/atom.xml" rel="self"/>
-  <link href="http://chyancheng.github.io/"/>
-  <updated>2015-03-20T01:59:48.938Z</updated>
-  <id>http://chyancheng.github.io/</id>
+  <link href="http://yoursite.com/"/>
+  <updated>2015-03-22T05:19:13.619Z</updated>
+  <id>http://yoursite.com/</id>
   
   <author>
     <name><![CDATA[chyancheng]]></name>
@@ -15,9 +15,27 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[:target 伪类]]></title>
+    <link href="http://yoursite.com/2015/03/22/target-%E4%BC%AA%E7%B1%BB/"/>
+    <id>http://yoursite.com/2015/03/22/target-伪类/</id>
+    <published>2015-03-21T16:00:00.000Z</published>
+    <updated>2015-03-22T05:19:13.619Z</updated>
+    <content type="html"><![CDATA[<p>首先，来看一个<a href="http://7.mywebwork.sinaapp.com/#home" target="_blank" rel="external">demo</a>。<br>这是由纯CSS完成的一个动画效果，其中的关键是运用了CSS3的<code>transition</code>（过渡）属性配合<code>:target</code>伪类实现。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>首先，来看一个<a href="http://7.mywebwork.sinaapp.com/#home" target="_blank" rel="external">demo</a>。<br>这是由纯CSS完成的一个动画效果，其中的关键是运用了CSS3的<code>tr]]>
+    </summary>
+    
+      <category term="CSS" scheme="http://yoursite.com/tags/CSS/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Hello My Blog]]></title>
-    <link href="http://chyancheng.github.io/2015/03/18/hello-world/"/>
-    <id>http://chyancheng.github.io/2015/03/18/hello-world/</id>
+    <link href="http://yoursite.com/2015/03/18/hello-world/"/>
+    <id>http://yoursite.com/2015/03/18/hello-world/</id>
     <published>2015-03-17T16:00:00.000Z</published>
     <updated>2015-03-20T01:59:48.938Z</updated>
     <content type="html"><![CDATA[<p>利用hexo搭建的静态博客。参考教程<a href="http://cnfeat.com/2014/05/10/2014-05-11-how-to-build-a-blog/" target="_blank" rel="external">如何搭建一个独立博客——简明Github Pages与Hexo教程</a>。</p>
@@ -26,9 +44,9 @@
     <![CDATA[<p>利用hexo搭建的静态博客。参考教程<a href="http://cnfeat.com/2014/05/10/2014-05-11-how-to-build-a-blog/" target="_blank" rel="external">如何搭建一个独立博客——简明Git]]>
     </summary>
     
-      <category term="blog" scheme="http://chyancheng.github.io/tags/blog/"/>
+      <category term="blog" scheme="http://yoursite.com/tags/blog/"/>
     
-      <category term="life" scheme="http://chyancheng.github.io/tags/life/"/>
+      <category term="life" scheme="http://yoursite.com/tags/life/"/>
     
   </entry>
   
