@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-03-22T06:32:55.655Z</updated>
+  <updated>2015-03-22T06:44:59.408Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,9 +19,9 @@
     <link href="http://yoursite.com/2015/03/22/target-%E4%BC%AA%E7%B1%BB/"/>
     <id>http://yoursite.com/2015/03/22/target-伪类/</id>
     <published>2015-03-21T16:00:00.000Z</published>
-    <updated>2015-03-22T06:32:55.655Z</updated>
+    <updated>2015-03-22T06:44:59.408Z</updated>
     <content type="html"><![CDATA[<p>首先，来看一个<a href="http://7.mywebwork.sinaapp.com" target="_blank" rel="external">demo</a>。</p>
-<p>这是由纯CSS完成的一个动画效果，其中的关键是运用了CSS3的<code>transition</code>（过渡）属性配合<code>:target</code>伪类实现。</p>
+<p>这是由纯CSS完成的一个动画效果，其中的关键是运用了CSS3的<code>transition</code>（过渡）属性配合<code>:target</code>伪类实现。<br><a id="more"></a></p>
 <hr>
 <h2 id="如何使用:target">如何使用<code>:target</code></h2><p>HTML<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">section</span> <span class="attribute">id</span>=<span class="value">"voters"</span>&gt;</span> </span><br><span class="line">   Content</span><br><span class="line"><span class="tag">&lt;/<span class="title">section</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>CSS<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#voters</span><span class="pseudo">:target</span> <span class="rules">&#123;</span><br><span class="line">   <span class="rule"><span class="attribute">background</span>:<span class="value"> yellow</span></span>;</span><br><span class="line"><span class="rule">&#125;</span></span></span><br></pre></td></tr></table></figure></p>
@@ -50,8 +50,9 @@
 <h2 id="参考链接">参考链接</h2><p><a href="https://css-tricks.com/on-target/" target="_blank" rel="external">On :target|CSS-Tricks</a></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p>首先，来看一个<a href="http://7.mywebwork.sinaapp.com" target="_blank" rel="external">demo</a>。</p>
-<p>这是由纯CSS完成的一个动画效果，其中的关键是运用了CSS3的<code>tran]]>
+    <![CDATA[<p>首先，来看一个<a href="http://7.mywebwork.sinaapp.com">demo</a>。</p>
+<p>这是由纯CSS完成的一个动画效果，其中的关键是运用了CSS3的<code>transition</code>（过渡）属性配合<code>:target</code>伪类实现。<br>]]>
+    
     </summary>
     
       <category term="CSS" scheme="http://yoursite.com/tags/CSS/"/>
