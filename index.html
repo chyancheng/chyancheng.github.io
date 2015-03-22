@@ -59,7 +59,7 @@
       <li class="menu-item menu-item-home">
         <a href="/">
           <i class="menu-item-icon icon-home"></i> <br />
-          首页
+          Accueil
         </a>
       </li>
     
@@ -67,7 +67,7 @@
       <li class="menu-item menu-item-archives">
         <a href="/archives">
           <i class="menu-item-icon icon-archives"></i> <br />
-          归档
+          Archives
         </a>
       </li>
     
@@ -75,7 +75,7 @@
       <li class="menu-item menu-item-tags">
         <a href="/tags">
           <i class="menu-item-icon icon-tags"></i> <br />
-          标签
+          Tags
         </a>
       </li>
     
@@ -117,7 +117,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2015-03-21
+            Posté le 2015-03-21
           
         </span>
         
@@ -141,7 +141,34 @@
 
         
           
-            <p>首先，来看一个<a href="http://7.mywebwork.sinaapp.com/#home" target="_blank" rel="external">demo</a>。<br>这是由纯CSS完成的一个动画效果，其中的关键是运用了CSS3的<code>transition</code>（过渡）属性配合<code>:target</code>伪类实现。</p>
+            <p>首先，来看一个<a href="http://7.mywebwork.sinaapp.com" target="_blank" rel="external">demo</a>。</p>
+<p>这是由纯CSS完成的一个动画效果，其中的关键是运用了CSS3的<code>transition</code>（过渡）属性配合<code>:target</code>伪类实现。</p>
+<hr>
+<h2 id="如何使用:target">如何使用<code>:target</code></h2><p>HTML<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">section</span> <span class="attribute">id</span>=<span class="value">"voters"</span>&gt;</span> </span><br><span class="line">   Content</span><br><span class="line"><span class="tag">&lt;/<span class="title">section</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>CSS<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#voters</span><span class="pseudo">:target</span> <span class="rules">&#123;</span><br><span class="line">   <span class="rule"><span class="attribute">background</span>:<span class="value"> yellow</span></span>;</span><br><span class="line"><span class="rule">&#125;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>当点击页面中的一个链接并跳转至相应位置后，页面的URL发生改变，触发<code>:target</code>的CSS样式。</p>
+<p>例如：</p>
+<p>![URL_hash][<a href="http://7xi66m.com1.z0.glb.clouddn.com/：target_pic1.png" target="_blank" rel="external">http://7xi66m.com1.z0.glb.clouddn.com/：target_pic1.png</a>]</p>
+<p>点击<code>&lt;a href=&quot;#voters&quot;&gt;voters&lt;/a&gt;</code>链接后，页面跳转至<code>#voters</code>，URL如上图显示时，则触发<code>#voters</code>下<code>:target</code>的CSS样式，将<code>#voters</code>的背景色变为黄色。</p>
+<p>当然，链接的目标区域也可以设置<code>class</code>类名。当页面跳转至目标区域后，<br>同样可以触发<code>.className:target</code>的CSS样式，如<a href="http://7.mywebwork.sinaapp.com" target="_blank" rel="external">demo</a>。</p>
+<hr>
+<h2 id="何时使用:target">何时使用<code>:target</code></h2><blockquote>
+<p>I’d use these rules-of-thumb for when <code>:target</code> is a good choice:</p>
+<ol>
+<li>When a “state” is needed</li>
+<li>When the jump-down behavior is acceptable</li>
+<li>When it’s acceptable to affect the browser history</li>
+</ol>
+</blockquote>
+<p>下列情况适合使用<code>:target</code>：</p>
+<ol>
+<li>当页面跳转后，CSS需要有相应的改变。</li>
+<li>页面跳转能够实现。</li>
+<li>能够接受其对浏览器的历史记录的影响。</li>
+</ol>
+<p>适合使用在导航栏与目标区域上。当点击导航栏跳转时，相应区域触发<code>:target</code>样式。</p>
+<hr>
+<h3 id="参考链接">参考链接</h3><p><a href="https://css-tricks.com/on-target/" target="_blank" rel="external">ON :target|CSS-Tricks</a></p>
 
           
         
@@ -198,7 +225,7 @@
       <div class="post-meta">
         <span class="post-time">
           
-            发表于 2015-03-17
+            Posté le 2015-03-17
           
         </span>
         
@@ -286,15 +313,15 @@
       <div class="site-state motion-element">
         <div class="site-state-item site-state-posts">
           <span class="site-state-item-count">2</span>
-          <span class="site-state-item-name">日志</span>
+          <span class="site-state-item-name">articles</span>
         </div>
         <div class="site-state-item site-state-tags">
             <span class="site-state-item-count">4</span>
-            <span class="site-state-item-name">标签</span>
+            <span class="site-state-item-name">tags</span>
         </div>
         <div class="site-state-item site-state-pages">
             <span class="site-state-item-count">1</span>
-            <span class="site-state-item-name">页面</span>
+            <span class="site-state-item-name">pages</span>
         </div>
       </div>
 
@@ -344,11 +371,11 @@
 </div>
 
 <div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+  Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
-  主题 - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT</a>
+  Thème - <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT</a>
 </div>
 
 
