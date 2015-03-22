@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-03-22T06:23:37.309Z</updated>
+  <updated>2015-03-22T06:27:07.105Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://yoursite.com/2015/03/22/target-%E4%BC%AA%E7%B1%BB/"/>
     <id>http://yoursite.com/2015/03/22/target-伪类/</id>
     <published>2015-03-21T16:00:00.000Z</published>
-    <updated>2015-03-22T06:23:37.309Z</updated>
+    <updated>2015-03-22T06:27:07.105Z</updated>
     <content type="html"><![CDATA[<p>首先，来看一个<a href="http://7.mywebwork.sinaapp.com" target="_blank" rel="external">demo</a>。</p>
 <p>这是由纯CSS完成的一个动画效果，其中的关键是运用了CSS3的<code>transition</code>（过渡）属性配合<code>:target</code>伪类实现。</p>
 <hr>
@@ -27,7 +27,7 @@
 <p>CSS<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#voters</span><span class="pseudo">:target</span> <span class="rules">&#123;</span><br><span class="line">   <span class="rule"><span class="attribute">background</span>:<span class="value"> yellow</span></span>;</span><br><span class="line"><span class="rule">&#125;</span></span></span><br></pre></td></tr></table></figure></p>
 <p>当点击页面中的一个链接并跳转至相应位置后，页面的URL发生改变，触发<code>:target</code>的CSS样式。</p>
 <p>例如：</p>
-<p>![URL_hash][<a href="http://7xi66m.com1.z0.glb.clouddn.com/：target_pic1.png" target="_blank" rel="external">http://7xi66m.com1.z0.glb.clouddn.com/：target_pic1.png</a>]</p>
+<p><img src="http://7xi66m.com1.z0.glb.clouddn.com/：target_pic1.png" alt="URL_hash"></p>
 <p>点击<code>&lt;a href=&quot;#voters&quot;&gt;voters&lt;/a&gt;</code>链接后，页面跳转至<code>#voters</code>，URL如上图显示时，则触发<code>#voters</code>下<code>:target</code>的CSS样式，将<code>#voters</code>的背景色变为黄色。</p>
 <p>当然，链接的目标区域也可以设置<code>class</code>类名。当页面跳转至目标区域后，<br>同样可以触发<code>.className:target</code>的CSS样式，如<a href="http://7.mywebwork.sinaapp.com" target="_blank" rel="external">demo</a>。</p>
 <hr>
