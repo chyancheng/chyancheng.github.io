@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2015-03-22T06:27:55.422Z</updated>
+  <updated>2015-03-22T06:32:55.655Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://yoursite.com/2015/03/22/target-%E4%BC%AA%E7%B1%BB/"/>
     <id>http://yoursite.com/2015/03/22/target-伪类/</id>
     <published>2015-03-21T16:00:00.000Z</published>
-    <updated>2015-03-22T06:27:55.422Z</updated>
+    <updated>2015-03-22T06:32:55.655Z</updated>
     <content type="html"><![CDATA[<p>首先，来看一个<a href="http://7.mywebwork.sinaapp.com" target="_blank" rel="external">demo</a>。</p>
 <p>这是由纯CSS完成的一个动画效果，其中的关键是运用了CSS3的<code>transition</code>（过渡）属性配合<code>:target</code>伪类实现。</p>
 <hr>
@@ -47,7 +47,7 @@
 </ol>
 <p>适合使用在导航栏与目标区域上。当点击导航栏跳转时，相应区域触发<code>:target</code>样式。</p>
 <hr>
-<h3 id="参考链接">参考链接</h3><p><a href="https://css-tricks.com/on-target/" target="_blank" rel="external">On :target|CSS-Tricks</a></p>
+<h2 id="参考链接">参考链接</h2><p><a href="https://css-tricks.com/on-target/" target="_blank" rel="external">On :target|CSS-Tricks</a></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p>首先，来看一个<a href="http://7.mywebwork.sinaapp.com" target="_blank" rel="external">demo</a>。</p>
