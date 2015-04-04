@@ -135,9 +135,10 @@
 <li>浮动元素，float 除 none 以外的值</li>
 <li>绝对定位元素，position（absolute，fixed）</li>
 <li>display 为以下其中之一的值 inline-blocks，table-cells，table-captions</li>
-<li>overflow 除了 visible 以外的值（hidden，auto，scroll）</li>
+<li>overflow 除了 visible 以外的值（hidden，auto，scroll）, 除非该值已经扩散到了视口</li>
 </ul>
 <p>其中需要注意的是：<code>display:table</code> 本身并不产生 BFC，而是由它产生匿名框，匿名框中包含 <code>display:table-cell</code> 的框会产 BFC。 总之，对于 <code>display:table</code> 的元素，产生 BFC 的是匿名框而不是 <code>display:table</code>。</p>
+<p>另需注意：当body设置 <code>overflow:hidden</code> 时，并不会产生 BFC ,需要同时给HTML设置 <code>overflow:hidden</code> 或者给body加上 <code>display:table</code> 、 <code>display:inline-block</code> 、 <code>position:absolute</code> ，才能成功的产生BFC。</p>
 <p>在 CSS3 中，BFC 叫做 Flow Root，并增加了一些触发条件：</p>
 <ul>
 <li>display 的 table-caption 值</li>

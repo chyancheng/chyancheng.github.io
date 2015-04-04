@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://chyancheng.github.io/"/>
-  <updated>2015-04-04T12:16:05.721Z</updated>
+  <updated>2015-04-04T13:40:05.678Z</updated>
   <id>http://chyancheng.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://chyancheng.github.io/2015/04/04/%E8%AF%A6%E8%AF%B4Block%20Formatting%20Contexts/"/>
     <id>http://chyancheng.github.io/2015/04/04/详说Block Formatting Contexts/</id>
     <published>2015-04-03T16:00:00.000Z</published>
-    <updated>2015-04-04T12:16:05.721Z</updated>
+    <updated>2015-04-04T13:40:05.678Z</updated>
     <content type="html"><![CDATA[<p>文章转载自<a href="http://kayosite.com/block-formatting-contexts-in-detail.html" target="_blank" rel="external">详说 Block Formatting Contexts (块级格式化上下文)</a><br>（原文基础上略有修改）。</p>
 <p>前几天有小伙伴在讨论关于 BFC 的问题。查阅了一些资料博客。这篇博文讲解的十分详细。转载来作为一个归纳总结。<br><a id="more"></a></p>
 <hr>
@@ -32,9 +32,10 @@
 <li>浮动元素，float 除 none 以外的值</li>
 <li>绝对定位元素，position（absolute，fixed）</li>
 <li>display 为以下其中之一的值 inline-blocks，table-cells，table-captions</li>
-<li>overflow 除了 visible 以外的值（hidden，auto，scroll）</li>
+<li>overflow 除了 visible 以外的值（hidden，auto，scroll）, 除非该值已经扩散到了视口</li>
 </ul>
 <p>其中需要注意的是：<code>display:table</code> 本身并不产生 BFC，而是由它产生匿名框，匿名框中包含 <code>display:table-cell</code> 的框会产 BFC。 总之，对于 <code>display:table</code> 的元素，产生 BFC 的是匿名框而不是 <code>display:table</code>。</p>
+<p>另需注意：当body设置 <code>overflow:hidden</code> 时，并不会产生 BFC ,需要同时给HTML设置 <code>overflow:hidden</code> 或者给body加上 <code>display:table</code> 、 <code>display:inline-block</code> 、 <code>position:absolute</code> ，才能成功的产生BFC。</p>
 <p>在 CSS3 中，BFC 叫做 Flow Root，并增加了一些触发条件：</p>
 <ul>
 <li>display 的 table-caption 值</li>
