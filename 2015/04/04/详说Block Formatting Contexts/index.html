@@ -18,9 +18,9 @@
 
 
 
-	<meta name="keywords" content="blog,life," />
+	<meta name="keywords" content="CSS,前端," />
 
-  <title> Hello Hexo // chyancheng </title>
+  <title> [转载]详说 Block Formatting Contexts (块级格式化上下文) // chyancheng </title>
 </head>
 
 <body>
@@ -91,7 +91,7 @@
           
           
             
-              Hello Hexo
+              [转载]详说 Block Formatting Contexts (块级格式化上下文)
             
           
         </h1>
@@ -100,15 +100,15 @@
       <div class="post-meta">
         <span class="post-time">
           
-            Posted on 2015-03-17
+            Posted on 2015-04-03
           
         </span>
         
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/03/18/hello-hexo/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/18/hello-hexo/"></span>
+            <a href="/2015/04/04/详说Block Formatting Contexts/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/04/详说Block Formatting Contexts/"></span>
             </a>
           </span>
           
@@ -123,7 +123,54 @@
         
 
         
-          <p>利用hexo搭建的静态博客。参考教程<a href="http://cnfeat.com/2014/05/10/2014-05-11-how-to-build-a-blog/" target="_blank" rel="external">如何搭建一个独立博客——简明Github Pages与Hexo教程</a>。</p>
+          <p>文章转载自<a href="http://kayosite.com/block-formatting-contexts-in-detail.html" target="_blank" rel="external">详说 Block Formatting Contexts (块级格式化上下文)</a><br>（原文基础上略有修改）。</p>
+<p>前几天有小伙伴在讨论关于 BFC 的问题。查阅了一些资料博客。这篇博文讲解的十分详细。转载来作为一个归纳总结。<br><a id="more"></a></p>
+<hr>
+<h2 id="BFC_是什么">BFC 是什么</h2><p>首先， BFC 在CSS的定位方案中是属于普通流(Normal Flow)，所以它并不会对兄弟元素有什么影响（与浮动(Floats)和绝对定位(Absolute Positioning)相比）。</p>
+<p>从样式上看，具有 BFC 的元素与普通的容器没有什么区别，但是从功能上，具有 BFC 的元素可以看作是隔离了的独立容器，容器里面的元素不会在布局上影响到外面的元素，并且 BFC 具有普通容器没有的一些特性，例如可以包含浮动元素，从而防止出现高度塌陷的问题。</p>
+<p>简单来说，BFC 就是一种属性，这种属性会影响着元素的定位以及与其兄弟元素之间的相互作用。</p>
+<hr>
+<h2 id="如何触发_BFC">如何触发 BFC</h2><p>满足下面任一条件的元素，会触发为 BFC ：</p>
+<ul>
+<li>浮动元素，float 除 none 以外的值</li>
+<li>绝对定位元素，position（absolute，fixed）</li>
+<li>display 为以下其中之一的值 inline-blocks，table-cells，table-captions</li>
+<li>overflow 除了 visible 以外的值（hidden，auto，scroll）</li>
+</ul>
+<p>其中需要注意的是：<code>display:table</code> 本身并不产生 BFC，而是由它产生匿名框，匿名框中包含 <code>display:table-cell</code> 的框会产 BFC。 总之，对于 <code>display:table</code> 的元素，产生 BFC 的是匿名框而不是 <code>display:table</code>。</p>
+<p>在 CSS3 中，BFC 叫做 Flow Root，并增加了一些触发条件：</p>
+<ul>
+<li>display 的 table-caption 值</li>
+<li>position 的 fixed 值，其实 fixed 是 absolute 的一个子类，因此在 CSS2.1 中使用这个值也会触发 BFC ，只是在 CSS3 中更加明确了这一点。</li>
+</ul>
+<p>记住，BFC 并不是元素，而是某些元素带有的一些属性。因此，是上面这些元素产生了 BFC ，而它们本身并不是 BFC ，这个概念需要区分清楚 。</p>
+<hr>
+<h2 id="BFC_的特性">BFC 的特性</h2><p>从整体上看，BFC 是隔离了的容器，这个具体可以表现为三个特性：</p>
+<h3 id="BFC_会阻止外边距折叠">BFC 会阻止外边距折叠</h3><p>在举例说明 BFC 如何阻止外边距折叠之前，首先说明一下外边距折叠的规则：仅当两个块级元素相邻并且在同一个块级格式化上下文时，它们垂直方向之间的外边距才会叠加。也就是说，即便两个块级元素相邻，但当它们不在同一个块级格式化上下文时它们的边距也不会折叠。因此，阻止外边距折叠只需产生新的 BFC 。</p>
+<p>效果如图：</p>
+<p><img src="http://kayosite.com/wp-content/uploads/2012/10/bfc-1.png" alt="1"></p>
+<p>代码如下：</p>
+<p>HTML<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">p</span>&gt;</span>我是一个段落，在我以及我的父元素上同时添加了上下的外边距<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">p</span>&gt;</span>我是一个段落，在我以及我的父元素上同时添加了上下的外边距<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">style</span>=<span class="value">"overflow:hidden"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">p</span>&gt;</span>我是一个段落，在我以及我的父元素上同时添加了上下的外边距(我没有产生边距折叠)<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>CSS<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">*<span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line"><span class="rule">&#125;</span></span></span><br><span class="line"><span class="tag">div</span><span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#ff9900</span></span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">margin-top</span>:<span class="value"> <span class="number">20px</span></span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">margin-bottom</span>:<span class="value"> <span class="number">20px</span></span></span>;</span><br><span class="line"><span class="rule">&#125;</span></span></span><br><span class="line"><span class="tag">p</span><span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">margin-top</span>:<span class="value"> <span class="number">20px</span></span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">margin-bottom</span>:<span class="value"> <span class="number">20px</span></span></span>;</span><br><span class="line"><span class="rule">&#125;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>上图的例子，三个 div 各包含一个 p 元素，三个 div 及其包含的 p 元素都有顶部和底部的外边距，但只有第三个 div 的边距没有与它的子元素 p 的外边距折叠。这是因为第三个 div 创建了新的 BFC ，由此可见：创建了 BFC 的元素，不和它的子元素发生外边距折叠。</p>
+<h3 id="BFC_可以包含浮动的元素">BFC 可以包含浮动的元素</h3><p>这也正是使用 overflow: hidden 与 overflow: auto 方法闭合浮动的原理，使用 overflow: hidden 或 overflow: auto 触发浮动元素的父元素的 BFC 特性，从而可以包含浮动元素，闭合浮动。</p>
+<p>W3C 的原文是“’Auto’ heights for block formatting context roots”，也就是 BFC 会根据子元素的情况自动适应高度，即使其子元素中包括浮动元素。</p>
+<p>效果如图：</p>
+<p><img src="http://kayosite.com/wp-content/uploads/2012/10/bfc-2.png" alt="2"></p>
+<p>代码如下：</p>
+<p>HTML<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">p</span>&gt;</span>我设置了左浮动 float: left, 但是我的父元素没有触发 BFC<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">style</span>=<span class="value">"overflow:hidden"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">p</span>&gt;</span>我设置了左浮动 float: left, 而且我的父元素触发了 BFC<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>CSS<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">*<span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line"><span class="rule">&#125;</span></span></span><br><span class="line"><span class="tag">div</span><span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">1000px</span></span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">4px</span> solid <span class="hexcolor">#9a9a9a</span></span></span>;</span><br><span class="line"><span class="rule">&#125;</span></span></span><br><span class="line"><span class="tag">p</span><span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">float</span>:<span class="value"> left</span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#ff9900</span></span></span>;</span><br><span class="line"><span class="rule">&#125;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>上面的例子中，有两个 div ，它们各包含一个设置了浮动的 p 元素，但第一个 div 出现了“高度塌陷”，这是因为内部的浮动元素脱离了普通流，因此该 div 相当于一个空标签，没有高度和宽度，即高度为 0 ，上下边框也重叠在一起。而第二个 div 使用 overflow: hidden 触发了 BFC ，可以包含浮动元素，因此能正确表现出高度，其边框位置也正常了。</p>
+<h3 id="BFC_可以阻止元素被浮动元素覆盖">BFC 可以阻止元素被浮动元素覆盖</h3><p>浮动元素的块级兄弟元素会无视浮动元素的位置，尽量占满一整行，这样就会被浮动元素覆盖，为该兄弟元素触发 BFC 后可以阻止这种情况的发生。</p>
+<p>效果如图：</p>
+<p><img src="http://kayosite.com/wp-content/uploads/2012/10/bfc-31.png" alt="3"></p>
+<p>代码如下：</p>
+<p>HTML<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"main"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">p</span>&gt;</span>我设置了 float: left; width: 200px;<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"aside"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">p</span>&gt;</span>我没有设置浮动，也没有触发 BFC ，width: 300px;background-color: #2595e5;<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">br</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"main"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">p</span>&gt;</span>我设置了 float: left; width: 200px;<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"aside"</span> <span class="attribute">style</span>=<span class="value">"overflow:hidden"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">p</span>&gt;</span>我没有设置浮动, 我触发了 BFC ，width: 300px;background-color: #2595e5;<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>CSS<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">*<span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">margin</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">padding</span>:<span class="value"> <span class="number">0</span></span></span>;</span><br><span class="line"><span class="rule">&#125;</span></span></span><br><span class="line"><span class="class">.main</span> <span class="tag">p</span><span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">float</span>:<span class="value"> left</span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">200px</span></span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#ff9900</span></span></span>;</span><br><span class="line"><span class="rule">&#125;</span></span></span><br><span class="line"><span class="class">.aside</span> <span class="tag">p</span><span class="rules">&#123;</span><br><span class="line">	<span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">300px</span></span></span>;</span><br><span class="line">	<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#2595e5</span></span></span>;</span><br><span class="line"><span class="rule">&#125;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>上图的下一个例子，蓝色背景的 div 使用 overflow: hidden 触发了 BFC ，它并不会被它的兄弟浮动元素覆盖，而是处于它的旁边。值得注意的是，以上的情况仅仅是元素宽度之和没有超出父元素宽度的情况，假设浮动元素宽度和它的非浮动兄弟元素宽度都没有超过父元素宽度，但两个元素的宽度加起来超出了父元素宽度的时候，非浮动元素会下降到下一行，即处于浮动元素下方，效果如下图：</p>
+<p><img src="http://kayosite.com/wp-content/uploads/2012/10/bfc-4.png" alt="4"></p>
+<hr>
+<p>本文转载自 Kayo Lee 博客，原文链接：<a href="http://kayosite.com/block-formatting-contexts-in-detail.html" target="_blank" rel="external">详说 Block Formatting Contexts (块级格式化上下文)</a>。</p>
 
         
       </div>
@@ -134,12 +181,12 @@
         
           <div class="post-tags">
             
-              <a href="/tags/blog/">
-                #blog
+              <a href="/tags/CSS/">
+                #CSS
               </a>
             
-              <a href="/tags/life/">
-                #life
+              <a href="/tags/前端/">
+                #前端
               </a>
             
           </div>
@@ -149,11 +196,11 @@
           <div class="post-nav">
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2015/03/22/target-伪类/">:target 伪类</a>
-              
             </div>
 
             <div class="post-nav-next post-nav-item">
+              
+                <a href="/2015/03/22/target-伪类/">:target 伪类</a>
               
             </div>
           </div>
@@ -170,8 +217,8 @@
   
     <div class="comments" id="comments">
       
-        <div class="ds-thread" data-thread-key="2015/03/18/hello-hexo/"
-             data-title="Hello Hexo" data-url="http://yoursite.com/2015/03/18/hello-hexo/">
+        <div class="ds-thread" data-thread-key="2015/04/04/详说Block Formatting Contexts/"
+             data-title="[转载]详说 Block Formatting Contexts (块级格式化上下文)" data-url="http://yoursite.com/2015/04/04/详说Block Formatting Contexts/">
         </div>
 
       
@@ -255,7 +302,7 @@
       <div class="post-toc-wrap sidebar-panel-active">
         <div class="post-toc-indicator-top post-toc-indicator"></div>
         <div class="post-toc">
-          
+          <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BFC_是什么"><span class="nav-number">1.</span> <span class="nav-text">BFC 是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何触发_BFC"><span class="nav-number">2.</span> <span class="nav-text">如何触发 BFC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFC_的特性"><span class="nav-number">3.</span> <span class="nav-text">BFC 的特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BFC_会阻止外边距折叠"><span class="nav-number">3.1.</span> <span class="nav-text">BFC 会阻止外边距折叠</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BFC_可以包含浮动的元素"><span class="nav-number">3.2.</span> <span class="nav-text">BFC 可以包含浮动的元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BFC_可以阻止元素被浮动元素覆盖"><span class="nav-number">3.3.</span> <span class="nav-text">BFC 可以阻止元素被浮动元素覆盖</span></a></li></ol></li></ol>
         </div>
         <div class="post-toc-indicator-bottom post-toc-indicator"></div>
       </div>
