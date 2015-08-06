@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://chyancheng.github.io/"/>
-  <updated>2015-04-04T13:40:05.678Z</updated>
+  <updated>2015-08-06T06:20:36.599Z</updated>
   <id>http://chyancheng.github.io/</id>
   
   <author>
@@ -13,6 +13,106 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Javascript内部原理——变量对象(Varible object)]]></title>
+    <link href="http://chyancheng.github.io/2015/08/06/Javascript%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94%E5%8F%98%E9%87%8F%E5%AF%B9%E8%B1%A1(Varible%20object)/"/>
+    <id>http://chyancheng.github.io/2015/08/06/Javascript内部原理——变量对象(Varible object)/</id>
+    <published>2015-08-05T16:00:00.000Z</published>
+    <updated>2015-08-06T06:20:36.599Z</updated>
+    <content type="html"><![CDATA[<p>我们真的了解 Javascript 的内部工作原理吗？</p>
+<p>下面几个问题可以检验一下。<br><a id="more"></a></p>
+<hr>
+<h2 id="Questions">Questions</h2><h3 id="Q1">Q1</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!(<span class="string">"a"</span> <span class="keyword">in</span> <span class="built_in">window</span>)) &#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">alert(a);<span class="comment">//undefined</span></span><br></pre></td></tr></table></figure>
+<h3 id="Q2">Q2</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>,</span><br><span class="line">    b = <span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">(x)</span> </span>&#123;</span><br><span class="line">        x &amp;&amp; a(--x);</span><br><span class="line">    &#125;;</span><br><span class="line">alert(a);<span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+<h3 id="Q3">Q3</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">(x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x * <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a;</span><br><span class="line">alert(a);<span class="comment">//function a(x) &#123;return x * 2;&#125;</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="处理上下文代码">处理上下文代码</h2><p>要想理解上面问题的执行结果的原因，需要先理解 Javascript 是如何处理执行上下文代码。</p>
+<p>处理执行上下文代码分为两个阶段：</p>
+<ol>
+<li>进入执行上下文</li>
+<li>执行代码</li>
+</ol>
+<h3 id="进入执行上下文">进入执行上下文</h3><p>先了解一个概念<strong>变量对象(Variable object)</strong>，它是一个与执行上下文有关的特殊的对象，它包括：</p>
+<ol>
+<li>变量声明(var)</li>
+<li>函数声明(FD)</li>
+<li>函数形参在上下文中的声明</li>
+</ol>
+<p>一般用 VO = { } 表示变量对象。举个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">(x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">20</span>;</span><br><span class="line">&#125;;</span><br><span class="line">test(<span class="number">30</span>);</span><br></pre></td></tr></table></figure>
+<p>上述代码对应的变量对象(VO)则如下所示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 全局上下文中的变量对象</span></span><br><span class="line">VO(globalContext) = &#123;</span><br><span class="line">  a: <span class="number">10</span>,</span><br><span class="line">  test: </span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// “test”函数上下文中的变量对象</span></span><br><span class="line">VO(test functionContext) = &#123;</span><br><span class="line">  x: <span class="number">30</span>,</span><br><span class="line">  b: <span class="number">20</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>当进入执行上下文时，变量对象(VO)会依次被下列属性填充：</p>
+<ol>
+<li><p>函数的形参<br>—— 其属性名就是形参的名字，其值就是实参的值；对于没有传递的参数，其值为undefined。</p>
+</li>
+<li><p>函数声明(FD)<br>—— 其属性名和值都是函数对象创建出来的；如果变量对象已经包含了相同名字的属性，则替换它的值。</p>
+</li>
+<li><p>变量声明(var)<br>—— 其属性名即为变量名，其值为undefined;如果变量名和已经声明的函数名或者函数的参数名相同，则不会影响已经存在的属性。</p>
+</li>
+</ol>
+<p>举个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">(a, b)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> c = <span class="number">10</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">d</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  <span class="keyword">var</span> e = <span class="function"><span class="keyword">function</span> <span class="title">_e</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line">  (<span class="function"><span class="keyword">function</span> <span class="title">x</span><span class="params">()</span> </span>&#123;&#125;);</span><br><span class="line">&#125;</span><br><span class="line">test(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+<p>当以10为参数进入“test”函数上下文的时候，对应的AO如下所示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AO(test) = &#123;</span><br><span class="line">  a: <span class="number">10</span>,</span><br><span class="line">  b: <span class="literal">undefined</span>,</span><br><span class="line">  c: <span class="literal">undefined</span>,</span><br><span class="line">  d: <span class="xml"><span class="tag">&lt;<span class="title">reference</span> <span class="attribute">to</span> <span class="attribute">FunctionDeclaration</span> "<span class="attribute">d</span>"&gt;</span>,</span><br><span class="line">  e: undefined</span><br><span class="line">&#125;;</span></span><br></pre></td></tr></table></figure>
+<p>注意，上面的AO并不包含函数“x”。这是因为这里的“x”并不是函数声明而是函数表达式（FunctionExpression），函数表达式不会对VO造成影响。 尽管函数“_e”也是函数表达式，然而，由于它被赋值给了变量“e”，因此它可以通过“e”来访问到。</p>
+<p>这样，第一阶段<strong>进入执行上下文</strong>就结束了，接下来是第二阶段<strong>执行代码</strong>。</p>
+<h3 id="执行代码">执行代码</h3><p>这时的变量对象(VO)的属性已经被填充好了（大多数值仍未undefined），在执行代码阶段，变量对象(VO)会被修改为如下形式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AO[<span class="string">'c'</span>] = <span class="number">10</span>;</span><br><span class="line">AO[<span class="string">'e'</span>] = <span class="xml"><span class="tag">&lt;<span class="title">reference</span> <span class="attribute">to</span> <span class="attribute">FunctionExpression</span> "<span class="attribute">_e</span>"&gt;</span>;</span></span><br></pre></td></tr></table></figure>
+<p>看一个更典型的例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">alert(x); <span class="comment">// function x()&#123;&#125; </span></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">10</span>;</span><br><span class="line">alert(x); <span class="comment">// 10 </span></span><br><span class="line">x = <span class="number">20</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">x</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line">alert(x); <span class="comment">// 20</span></span><br></pre></td></tr></table></figure>
+<p>根据规则，在进入上下文的时候，VO会首先被填充函数声明； 同一阶段，还有变量声明“x”，但是，正如此前提到的，变量声明是在函数形参和函数声明之后，并且，变量声明不会对已经存在的同样名字的函数形参和函数声明发生冲突， 因此，在<strong>进入执行上下文</strong>的阶段，VO填充为如下形式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">VO = &#123;&#125;;</span><br><span class="line">VO[<span class="string">'x'</span>] = <span class="xml"><span class="tag">&lt;<span class="title">reference</span> <span class="attribute">to</span> <span class="attribute">FunctionDeclaration</span> "<span class="attribute">x</span>"&gt;</span>;</span></span><br><span class="line"><span class="comment">// 发现var x = 10;</span></span><br><span class="line"><span class="comment">// 如果函数“x”还未定义，则 "x" 为undefined, 但是在我们的例子中已经有了函数声明“x”;</span></span><br><span class="line"><span class="comment">// 所以变量声明并不会影响同名的函数值;</span></span><br><span class="line">VO[<span class="string">'x'</span>] = <span class="xml"><span class="tag">&lt;<span class="title">reference</span> <span class="attribute">to</span> <span class="attribute">FunctionDeclaration</span> "<span class="attribute">x</span>"&gt;</span>;</span></span><br></pre></td></tr></table></figure>
+<p>随后，在<strong>执行代码</strong>阶段，VO被修改为如下所示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">VO[<span class="string">'x'</span>] = <span class="number">10</span>;</span><br><span class="line">VO[<span class="string">'x'</span>] = <span class="number">20</span>;</span><br></pre></td></tr></table></figure>
+<p>再看一个例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line">alert(a); <span class="comment">// 1</span></span><br><span class="line">alert(b); <span class="comment">// undefined, but not "b is not defined"</span></span><br></pre></td></tr></table></figure>
+<p>在<strong>进入执行上下文</strong>阶段，变量存储在VO中，因此，尽管else的代码块永远都不会执行到，但“b”却仍然在VO中，值为undefined，而不是报错。</p>
+<hr>
+<h2 id="回顾开始的问题">回顾开始的问题</h2><h3 id="Q1-1">Q1</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!(<span class="string">"a"</span> <span class="keyword">in</span> <span class="built_in">window</span>)) &#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">alert(a);<span class="comment">//undefined</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>进入执行上下文： 创建VO，并填充变量声明 a，VO如下所示：</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">VO(global) = &#123;</span><br><span class="line">    a: <span class="literal">undefined</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行代码： 进入 if语句，发现条件判断 “a” in window 为 true。于是就不会进入if代码块，直接执行alert语句，因此，最终为undefined。</p>
+</li>
+</ol>
+<h3 id="Q2-1">Q2</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>,</span><br><span class="line">    b = <span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">(x)</span> </span>&#123;</span><br><span class="line">        x &amp;&amp; a(--x);</span><br><span class="line">    &#125;;</span><br><span class="line">alert(a);<span class="comment">//1</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>进入执行上下文： 注意， b = function a(){}，这里的 function a并非函数声明，因为整个这个句话属于赋值语句（assignment statement），所以，这里的 function a会被看作是函数表达式。 函数表达式是不会对VO造成影响的。所以，这个时候VO中其实只有 a和x（函数形参）：</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">VO(global) = &#123;</span><br><span class="line">a: <span class="literal">undefined</span>,</span><br><span class="line">b: <span class="literal">undefined</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行代码： 这个时候a的值修改为1:</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">VO(global) = &#123;</span><br><span class="line">x: <span class="literal">undefined</span>,</span><br><span class="line">a: <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="Q3-1">Q3</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span><span class="params">(x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x * <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a;</span><br><span class="line">alert(a);<span class="comment">//function a(x) &#123;return x * 2;&#125;</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>进入执行上下文： 根据变量对象(VO)介绍的，填充VO的顺序是: 函数的形参 -&gt; 函数声明 -&gt; 变量声明。变量a在函数a后面，那么，变量a遇到函数a怎么办呢？还是根据变量对象中介绍的，当变量声明遇到VO中已经有同名的时候，不会影响已经存在的属性。因此，VO如下所示：：</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">VO(global) = &#123;</span><br><span class="line">a: <span class="xml"><span class="tag">&lt;<span class="title">reference</span> <span class="attribute">to</span> <span class="attribute">FunctionExpression</span> "<span class="attribute">x</span>"&gt;</span></span><br><span class="line">&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行代码： 没变化，最终的结果是：函数a。</p>
+</li>
+</ol>
+<hr>
+<p>参考链接：</p>
+<ol>
+<li><a href="http://dmitry.baranovskiy.com/post/91403200" target="_blank" rel="external">So, you think you know JavaScript?</a></li>
+<li><a href="http://dmitrysoshnikov.com/ecmascript/chapter-2-variable-object/" target="_blank" rel="external">ECMA-262-3 in detail. Chapter 2. Variable object.</a></li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>我们真的了解 Javascript 的内部工作原理吗？</p>
+<p>下面几个问题可以检验一下。<br>]]>
+    
+    </summary>
+    
+      <category term="Javascript" scheme="http://chyancheng.github.io/tags/Javascript/"/>
+    
+      <category term="前端" scheme="http://chyancheng.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[[转载]详说 Block Formatting Contexts (块级格式化上下文)]]></title>
