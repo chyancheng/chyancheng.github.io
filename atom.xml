@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://chyancheng.github.io/"/>
-  <updated>2015-08-06T06:25:39.202Z</updated>
+  <updated>2015-08-09T03:04:47.169Z</updated>
   <id>http://chyancheng.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://chyancheng.github.io/2015/08/06/Javascript%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86%E2%80%94%E2%80%94%E5%8F%98%E9%87%8F%E5%AF%B9%E8%B1%A1(Variable%20object)/"/>
     <id>http://chyancheng.github.io/2015/08/06/Javascript内部原理——变量对象(Variable object)/</id>
     <published>2015-08-05T16:00:00.000Z</published>
-    <updated>2015-08-06T06:25:39.202Z</updated>
+    <updated>2015-08-09T03:04:47.169Z</updated>
     <content type="html"><![CDATA[<p>我们真的了解 Javascript 的内部工作原理吗？</p>
 <p>下面几个问题可以检验一下。<br><a id="more"></a></p>
 <hr>
@@ -98,7 +98,7 @@
 <hr>
 <p>参考链接：</p>
 <ol>
-<li><a href="http://dmitry.baranovskiy.com/post/91403200" target="_blank" rel="external">So, you think you know JavaScript?</a></li>
+<li><a href="http://goddyzhao.tumblr.com/post/11478726832/do-i-really-understand-javascript" target="_blank" rel="external">JavaScript内部原理实践——真的懂JavaScript吗？</a></li>
 <li><a href="http://dmitrysoshnikov.com/ecmascript/chapter-2-variable-object/" target="_blank" rel="external">ECMA-262-3 in detail. Chapter 2. Variable object.</a></li>
 </ol>
 ]]></content>
