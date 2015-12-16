@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://chyancheng.github.io/"/>
-  <updated>2015-12-16T08:53:30.047Z</updated>
+  <updated>2015-12-16T08:54:25.345Z</updated>
   <id>http://chyancheng.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://chyancheng.github.io/2015/12/16/Javascript%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E7%9A%84%E5%8F%91%E5%B1%95/"/>
     <id>http://chyancheng.github.io/2015/12/16/Javascript异步编程的发展/</id>
     <published>2015-12-15T16:00:00.000Z</published>
-    <updated>2015-12-16T08:53:30.047Z</updated>
+    <updated>2015-12-16T08:54:25.345Z</updated>
     <content type="html"><![CDATA[<h2 id="为什么要异步编程">为什么要异步编程</h2><p>举个例子，你有一件事想要拜托朋友去做，于是你便打电话给他，让他帮你完成这件事，你的朋友便去做这件事。<br>如果是<strong>同步编程</strong>，就好比你要一直拿着电话等你的朋友做完这件事告诉你之后，你才能挂断电话去干别的事；<br>而<strong>异步编程</strong>，你可以跟朋友说“这件事做完了打电话告诉我”，于是你便可以立即去处理别的事，而不用等这件事完成。这便是异步编程的好处。<br><a id="more"></a></p>
 <hr>
 <h2 id="Javascript异步编程的发展">Javascript异步编程的发展</h2><h3 id="回调函数_Callbacks">回调函数 Callbacks</h3><p>以最常见的 Ajax 操作来举例子：</p>
@@ -50,7 +50,13 @@
 <p>利用 Async 函数这样改写上面Ajax的例子：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> makeAjaxCall = <span class="function"><span class="keyword">function</span><span class="params">(url)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Promise(<span class="function"><span class="keyword">function</span><span class="params">(resolve, reject)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// do some ajax</span></span><br><span class="line">        resolve(result)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;;</span><br><span class="line">(async <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> result = await makeAjaxCall(<span class="string">'http://url1'</span>)</span><br><span class="line">    result = <span class="built_in">JSON</span>.parse(result)</span><br><span class="line">    result = await makeAjaxCall(`http:<span class="comment">//url2?q=$&#123;result.query&#125;`)</span></span><br><span class="line">    result = <span class="built_in">JSON</span>.parse(result)</span><br><span class="line">    result = await makeAjaxCall(`http:<span class="comment">//url3?q=$&#123;result.query&#125;`)</span></span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
 <hr>
-<p>参考链接：<br><a href="https://idiotwu.me/going-async-with-javascript/" target="_blank" rel="external">再谈 JavaScript 异步编程</a><br><a href="http://birdgg.me/post/asynchronous-control-flow#toc_4" target="_blank" rel="external">JavaScript 异步流程控制比较</a><br><a href="http://www.ruanyifeng.com/blog/2015/04/generator.html" target="_blank" rel="external">Generator 函数的含义与用法</a><br><a href="http://www.ruanyifeng.com/blog/2015/05/async.html" target="_blank" rel="external">async 函数的含义和用法</a></p>
+<p>参考链接：</p>
+<ol>
+<li><a href="https://idiotwu.me/going-async-with-javascript/" target="_blank" rel="external">再谈 JavaScript 异步编程</a></li>
+<li><a href="http://birdgg.me/post/asynchronous-control-flow#toc_4" target="_blank" rel="external">JavaScript 异步流程控制比较</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2015/04/generator.html" target="_blank" rel="external">Generator 函数的含义与用法</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2015/05/async.html" target="_blank" rel="external">async 函数的含义和用法</a></li>
+</ol>
 ]]></content>
     <summary type="html">
     <![CDATA[<h2 id="为什么要异步编程">为什么要异步编程</h2><p>举个例子，你有一件事想要拜托朋友去做，于是你便打电话给他，让他帮你完成这件事，你的朋友便去做这件事。<br>如果是<strong>同步编程</strong>，就好比你要一直拿着电话等你的朋友做完这件事告诉你之后，你才能挂断电话去干别的事；<br>而<strong>异步编程</strong>，你可以跟朋友说“这件事做完了打电话告诉我”，于是你便可以立即去处理别的事，而不用等这件事完成。这便是异步编程的好处。<br>]]>
