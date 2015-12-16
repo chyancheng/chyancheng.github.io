@@ -18,9 +18,9 @@
 
 
 
-	<meta name="keywords" content="CSS,前端," />
+	<meta name="keywords" content="Javascript,前端," />
 
-  <title> :target 伪类 // chyancheng </title>
+  <title> Javascript异步编程的发展 // chyancheng </title>
 </head>
 
 <body>
@@ -91,7 +91,7 @@
           
           
             
-              :target 伪类
+              Javascript异步编程的发展
             
           
         </h1>
@@ -100,15 +100,15 @@
       <div class="post-meta">
         <span class="post-time">
           
-            Posted on 2015-03-21
+            Posted on 2015-12-15
           
         </span>
         
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/03/22/target-伪类/#comments" >
-              <span class="post-comments-count ds-thread-count" data-thread-key="2015/03/22/target-伪类/"></span>
+            <a href="/2015/12/16/Javascript异步编程的发展/#comments" >
+              <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/16/Javascript异步编程的发展/"></span>
             </a>
           </span>
           
@@ -123,34 +123,37 @@
         
 
         
-          <p>首先，来看一个<a href="http://7.mywebwork.sinaapp.com" target="_blank" rel="external">demo</a>。</p>
-<p>这是由纯CSS完成的一个动画效果，其中的关键是运用了CSS3的<code>transition</code>（过渡）属性配合<code>:target</code>伪类实现。<br><a id="more"></a></p>
+          <h2 id="为什么要异步编程">为什么要异步编程</h2><p>举个例子，你有一件事想要拜托朋友去做，于是你便打电话给他，让他帮你完成这件事，你的朋友便去做这件事。<br>如果是<strong>同步编程</strong>，就好比你要一直拿着电话等你的朋友做完这件事告诉你之后，你才能挂断电话去干别的事；<br>而<strong>异步编程</strong>，你可以跟朋友说“这件事做完了打电话告诉我”，于是你便可以立即去处理别的事，而不用等这件事完成。这便是异步编程的好处。<br><a id="more"></a></p>
 <hr>
-<h2 id="如何使用:target">如何使用<code>:target</code></h2><p>HTML<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">section</span> <span class="attribute">id</span>=<span class="value">"voters"</span>&gt;</span> </span><br><span class="line">   Content</span><br><span class="line"><span class="tag">&lt;/<span class="title">section</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>CSS<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="id">#voters</span><span class="pseudo">:target</span> <span class="rules">&#123;</span><br><span class="line">   <span class="rule"><span class="attribute">background</span>:<span class="value"> yellow</span></span>;</span><br><span class="line"><span class="rule">&#125;</span></span></span><br></pre></td></tr></table></figure></p>
-<p>当点击页面中的一个链接并跳转至相应位置后，页面的URL发生改变，触发<code>:target</code>的CSS样式。</p>
-<p>例如：</p>
-<p><img src="http://7xi66m.com1.z0.glb.clouddn.com/：target_pic1.png" alt="URL_hash"></p>
-<p>点击<code>&lt;a href=&quot;#voters&quot;&gt;voters&lt;/a&gt;</code>链接后，页面跳转至<code>#voters</code>，URL如上图显示时，则触发<code>#voters</code>下<code>:target</code>的CSS样式，将<code>#voters</code>的背景色变为黄色。</p>
-<p>当然，链接的目标区域也可以设置<code>class</code>类名。当页面跳转至目标区域后，<br>同样可以触发<code>.className:target</code>的CSS样式，如<a href="http://7.mywebwork.sinaapp.com" target="_blank" rel="external">demo</a>。</p>
-<hr>
-<h2 id="何时使用:target">何时使用<code>:target</code></h2><blockquote>
-<p>I’d use these rules-of-thumb for when <code>:target</code> is a good choice:</p>
+<h2 id="异步编程的发展">异步编程的发展</h2><h3 id="回调函数_Callbacks">回调函数 Callbacks</h3><p>以最常见的 Ajax 操作来举例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> makeAjaxCall = <span class="function"><span class="keyword">function</span><span class="params">(url, cb)</span> </span>&#123;  </span><br><span class="line">    <span class="comment">// do some ajax</span></span><br><span class="line">    <span class="comment">// callback with result</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">makeAjaxCall(<span class="string">'http://url1'</span>, <span class="function"><span class="keyword">function</span><span class="params">(result)</span> </span>&#123;  </span><br><span class="line">    result = <span class="built_in">JSON</span>.parse(result)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>这是最基本的异步编程方法，优点是简单易理解，但如果过多的回调嵌套在一起，那代码将变得十分可怕，难以维护，即所谓的 ”callback hell”；</p>
+<h3 id="Promise">Promise</h3><p>ES6中 Promise 的出现就是为了解决回调地狱，它更像是一种语法糖。Promise 可以将回调函数纵向加载，不用那样层层嵌套。<br>将上面的例子用 Promise 改写:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> makeAjaxCall = <span class="function"><span class="keyword">function</span><span class="params">(url)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Promise(<span class="function"><span class="keyword">function</span><span class="params">(resolve, reject)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// do some ajax</span></span><br><span class="line">        resolve(result)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">makeAjaxCall(<span class="string">'http://url1'</span>)  </span><br><span class="line">    .then(<span class="built_in">JSON</span>.parse)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span><span class="params">(result)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> makeAjaxCall(`http:<span class="comment">//url2?q=$&#123;result.query&#125;`)</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="built_in">JSON</span>.parse)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span><span class="params">(result)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> makeAjaxCall(`http:<span class="comment">//url3?q=$&#123;result.query&#125;`)</span></span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="Generator">Generator</h3><p>ES6中更加强大的一个特性 Generator ,Generator 最大特点就是可以交出函数的执行权（即暂停执行）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">gen</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">var</span> a = <span class="keyword">yield</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">var</span> b = <span class="keyword">yield</span> a * <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码就是一个 Generator 函数。它不同于普通函数，是可以暂停执行的，所以函数名之前要加星号，以示区别。<br>整个 Generator 函数就是一个封装的异步任务，或者说是异步任务的容器。异步操作需要暂停的地方，都用 yield 语句注明。Generator 函数的执行方法如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> it = gen()</span><br><span class="line"></span><br><span class="line">it.next() <span class="comment">// output: &#123;value: 1, done: false&#125;  </span></span><br><span class="line">it.next(<span class="number">10</span>) <span class="comment">// a = 10, output: &#123;value: 20, done: false&#125;  </span></span><br><span class="line">it.next(<span class="number">100</span>) <span class="comment">// b = 100, output: &#123;value: 100, done: true&#125;</span></span><br></pre></td></tr></table></figure>
+<p>上面代码中，调用 Generator 函数，会返回一个内部指针（即遍历器 ）g 。这是 Generator 函数不同于普通函数的另一个地方，即执行它不会返回结果，返回的是指针对象。调用指针 g 的 next 方法，会移动内部指针（即执行异步任务的第一段），指向第一个遇到的 yield 语句，上例是执行到 x + 2 为止。<br>换言之，next 方法的作用是分阶段执行 Generator 函数。每次调用 next 方法，会返回一个对象，表示当前阶段的信息（ value 属性和 done 属性）。value 属性是 yield 语句后面表达式的值，表示当前阶段的值；done 属性是一个布尔值，表示 Generator 函数是否执行完毕，即是否还有下一个阶段。</p>
+<p>通过 Generator 将我们之前的 makeAjaxCall 函数进行封装：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> makeAjaxCall = <span class="function"><span class="keyword">function</span><span class="params">(url)</span> </span>&#123;  </span><br><span class="line">    <span class="comment">// do some ajax</span></span><br><span class="line">    iterator.next(result)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">requests</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">var</span> result = <span class="keyword">yield</span> makeAjaxCall(<span class="string">'http://url1'</span>)</span><br><span class="line">    result = <span class="built_in">JSON</span>.parse(result)</span><br><span class="line">    result = <span class="keyword">yield</span> makeAjaxCall(`http:<span class="comment">//url2?q=$&#123;result.query&#125;`)</span></span><br><span class="line">    result = <span class="built_in">JSON</span>.parse(result)</span><br><span class="line">    result = <span class="keyword">yield</span> makeAjaxCall(`http:<span class="comment">//url3?q=$&#123;result.query&#125;`)</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> iterator = requests()  </span><br><span class="line">iterator.next() <span class="comment">// get everything start</span></span><br></pre></td></tr></table></figure>
+<h3 id="Async(ES7)">Async(ES7)</h3><p>Async 函数就是 Generator 函数的语法糖，就是将 Generator 函数的星号替换成 async，将 yield 替换成 awai。<br>一个用 Generator 依次读取两个文件的例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> readFile = <span class="function"><span class="keyword">function</span> <span class="params">(fileName)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Promise(<span class="function"><span class="keyword">function</span> <span class="params">(resolve, reject)</span></span>&#123;</span><br><span class="line">    fs.readFile(fileName, <span class="function"><span class="keyword">function</span><span class="params">(error, data)</span></span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (error) reject(error);</span><br><span class="line">      resolve(data);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> gen = <span class="function"><span class="keyword">function</span>* <span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">var</span> f1 = <span class="keyword">yield</span> readFile(<span class="string">'/etc/fstab'</span>);</span><br><span class="line">  <span class="keyword">var</span> f2 = <span class="keyword">yield</span> readFile(<span class="string">'/etc/shells'</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(f1.toString());</span><br><span class="line">  <span class="built_in">console</span>.log(f2.toString());</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>改写成 Async 函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> readFile = <span class="function"><span class="keyword">function</span> <span class="params">(fileName)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Promise(<span class="function"><span class="keyword">function</span> <span class="params">(resolve, reject)</span></span>&#123;</span><br><span class="line">    fs.readFile(fileName, <span class="function"><span class="keyword">function</span><span class="params">(error, data)</span></span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (error) reject(error);</span><br><span class="line">      resolve(data);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> asyncReadFile = async <span class="function"><span class="keyword">function</span> <span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">var</span> f1 = await readFile(<span class="string">'/etc/fstab'</span>);</span><br><span class="line">  <span class="keyword">var</span> f2 = await readFile(<span class="string">'/etc/shells'</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(f1.toString());</span><br><span class="line">  <span class="built_in">console</span>.log(f2.toString());</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Async 函数对 Generator 函数的改进，体现在以下三点：</p>
 <ol>
-<li>When a “state” is needed</li>
-<li>When the jump-down behavior is acceptable</li>
-<li>When it’s acceptable to affect the browser history</li>
+<li>内置执行器。 Generator 函数的执行必须靠执行器，所以才有了 co 函数库，而 Async 函数自带执行器。也就是说，async 函数的执行，与普通函数一模一样，只要一行。</li>
 </ol>
-</blockquote>
-<p>下列情况适合使用<code>:target</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = asyncReadFile();</span><br></pre></td></tr></table></figure>
 <ol>
-<li>当页面跳转后，CSS需要有相应的改变。</li>
-<li>页面跳转能够实现。</li>
-<li>能够接受其对浏览器的历史记录的影响。</li>
+<li>更好的语义。 async 和 await，比起星号和 yield，语义更清楚了。async 表示函数里有异步操作，await 表示紧跟在后面的表达式需要等待结果。</li>
+<li>更广的适用性。 co 函数库约定，yield 命令后面只能是 Thunk 函数或 Promise 对象，而 async 函数的 await 命令后面，可以跟 Promise 对象和原始类型的值（数值、字符串和布尔值，但这时等同于同步操作）。</li>
 </ol>
-<p>适合使用在导航栏与目标区域上。当点击导航栏跳转时，相应区域触发<code>:target</code>样式。</p>
+<p>利用 Async 函数这样改写上面Ajax的例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> makeAjaxCall = <span class="function"><span class="keyword">function</span><span class="params">(url)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Promise(<span class="function"><span class="keyword">function</span><span class="params">(resolve, reject)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// do some ajax</span></span><br><span class="line">        resolve(result)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;;</span><br><span class="line">(async <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> result = await makeAjaxCall(<span class="string">'http://url1'</span>)</span><br><span class="line">    result = <span class="built_in">JSON</span>.parse(result)</span><br><span class="line">    result = await makeAjaxCall(`http:<span class="comment">//url2?q=$&#123;result.query&#125;`)</span></span><br><span class="line">    result = <span class="built_in">JSON</span>.parse(result)</span><br><span class="line">    result = await makeAjaxCall(`http:<span class="comment">//url3?q=$&#123;result.query&#125;`)</span></span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
 <hr>
-<h2 id="参考链接">参考链接</h2><p><a href="https://css-tricks.com/on-target/" target="_blank" rel="external">On :target|CSS-Tricks</a></p>
+<p>参考链接：<br><a href="https://idiotwu.me/going-async-with-javascript/" target="_blank" rel="external">再谈 JavaScript 异步编程</a><br><a href="http://birdgg.me/post/asynchronous-control-flow#toc_4" target="_blank" rel="external">JavaScript 异步流程控制比较</a><br><a href="http://www.ruanyifeng.com/blog/2015/04/generator.html" target="_blank" rel="external">Generator 函数的含义与用法</a><br><a href="http://www.ruanyifeng.com/blog/2015/05/async.html" target="_blank" rel="external">async 函数的含义和用法</a></p>
 
         
       </div>
@@ -161,8 +164,8 @@
         
           <div class="post-tags">
             
-              <a href="/tags/CSS/">
-                #CSS
+              <a href="/tags/Javascript/">
+                #Javascript
               </a>
             
               <a href="/tags/前端/">
@@ -176,13 +179,11 @@
           <div class="post-nav">
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2015/04/04/详说Block Formatting Contexts/">[转载]详说 Block Formatting Contexts (块级格式化上下文)</a>
-              
             </div>
 
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2015/03/18/hello-hexo/">Hello Hexo</a>
+                <a href="/2015/11/15/关于this/">关于this</a>
               
             </div>
           </div>
@@ -199,8 +200,8 @@
   
     <div class="comments" id="comments">
       
-        <div class="ds-thread" data-thread-key="2015/03/22/target-伪类/"
-             data-title=":target 伪类" data-url="http://chyancheng.github.io/2015/03/22/target-伪类/">
+        <div class="ds-thread" data-thread-key="2015/12/16/Javascript异步编程的发展/"
+             data-title="Javascript异步编程的发展" data-url="http://chyancheng.github.io/2015/12/16/Javascript异步编程的发展/">
         </div>
 
       
@@ -284,7 +285,7 @@
       <div class="post-toc-wrap sidebar-panel-active">
         <div class="post-toc-indicator-top post-toc-indicator"></div>
         <div class="post-toc">
-          <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用:target"><span class="nav-number">1.</span> <span class="nav-text">如何使用:target</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#何时使用:target"><span class="nav-number">2.</span> <span class="nav-text">何时使用:target</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">3.</span> <span class="nav-text">参考链接</span></a></li></ol>
+          <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要异步编程"><span class="nav-number">1.</span> <span class="nav-text">为什么要异步编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步编程的发展"><span class="nav-number">2.</span> <span class="nav-text">异步编程的发展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#回调函数_Callbacks"><span class="nav-number">2.1.</span> <span class="nav-text">回调函数 Callbacks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Promise"><span class="nav-number">2.2.</span> <span class="nav-text">Promise</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generator"><span class="nav-number">2.3.</span> <span class="nav-text">Generator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Async(ES7)"><span class="nav-number">2.4.</span> <span class="nav-text">Async(ES7)</span></a></li></ol></li></ol>
         </div>
         <div class="post-toc-indicator-bottom post-toc-indicator"></div>
       </div>
